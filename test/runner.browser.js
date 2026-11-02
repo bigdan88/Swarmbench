@@ -20,15 +20,17 @@ test('real browser produces evidence and distinguishes a broken submission', asy
     const good = await evaluate(benchmark, { url, directory: join(root, 'good'), sourceHash: 'fixture' });
     assert.equal(good.summary.score, 80);
     assert.equal(good.summary.status, 'provisional');
-    assert.equal(good.results.length, 5);
+    assert.equal(good.results.length, 6);
     for (const result of good.results) {
       assert.equal(result.status, 'passed', result.error);
       await access(join(root, 'good', result.screenshot));
       await access(join(root, 'good', result.trace));
+      await access(join(root, 'good', result.dom));
+      await access(join(root, 'good', result.accessibility));
     }
     const broken = await evaluate(benchmark, { url: `${url}/broken`, directory: join(root, 'broken'), sourceHash: 'fixture' });
     assert.equal(broken.summary.score, 65);
-    assert.equal(broken.results.find(item => item.id === 'delete').status, 'failed');
+    assert.equal(broken.results.find(item => item.id === 'manage.delete').status, 'failed');
     await assert.rejects(evaluate(benchmark, { url, directory: join(root, 'good') }), /EEXIST/);
   } finally {
     await new Promise(resolve => server.close(resolve));

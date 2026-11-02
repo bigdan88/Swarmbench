@@ -1,0 +1,12 @@
+{
+  "repetitions": 1,
+  "cases": [
+    {
+      "benchmark": "../benchmarks/todo.mjs",
+      "submissions": [
+        { "id": "builder-a", "builder": "model-a", "url": "http://localhost:3000", "revision": "record-actual-commit" },
+        { "id": "builder-b", "builder": "model-b", "url": "http://localhost:3001", "revision": "record-actual-commit" }
+      ]
+    }
+  ]
+}
